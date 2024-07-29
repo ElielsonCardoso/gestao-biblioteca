@@ -16,6 +16,7 @@ public class Livro {
     private String titulo;
     private String autor;
     private String isbn;
+    @Column(name = "data_publicacao")
     private LocalDate dataPublicacao;
     @ManyToOne
     @JoinColumn(name = "categoria_id")

@@ -16,6 +16,7 @@ public class Usuario {
     private Long id;
     private String nome;
     private String email;
+    @Column(name = "data_cadastro")
     private Timestamp dataCadastro;
     private String telefone;
 

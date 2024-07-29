@@ -8,4 +8,6 @@ import com.atividadeoxy.biblioteca.Resource.Param.LivroParam;
 
 public interface LivroRepositoryCustom {
     Page<LivroDTO> findLivroByParam(Pageable pageable, LivroParam livroParam);
+
+    Page<LivroDTO> findLivrosRecomendados(Pageable pageable, Long usuarioId);
 }

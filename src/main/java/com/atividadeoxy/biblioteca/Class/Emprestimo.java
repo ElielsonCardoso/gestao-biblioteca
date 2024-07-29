@@ -21,8 +21,10 @@ public class Emprestimo {
     @ManyToOne
     @JoinColumn(name = "livro_id")
     private Livro livro;
-    private LocalDate data_emprestimo;
-    private LocalDate data_devolucao;
+    @Column(name = "data_emprestimo")
+    private LocalDate dataEmprestimo;
+    @Column(name = "data_devolucao")
+    private LocalDate dataDevolucao;
     @Enumerated(EnumType.STRING)
     private StatusEmprestimo status;
 }

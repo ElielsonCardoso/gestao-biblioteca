@@ -23,12 +23,12 @@ public class EmprestimoRepositoryImpl implements EmprestimoRepositoryCustom {
     private EntityManager entityManager;
 
     @Override
-    public Page<RecomendacaoLivroDTO> findRecomendacaoLivros(Pageable pageable, Long usuarioid) {
+    public Page<RecomendacaoLivroDTO> findRecomendacaoLivros(Pageable pageable, Long usuarioId) {
         StringBuilder sql = new StringBuilder(getSqlRecomendacaoLivro());
 
         Query query = entityManager.createNativeQuery(sql.toString());
 
-        query.setParameter("usuarioId", usuarioid);
+        query.setParameter("usuarioId", usuarioId);
 
         query.setFirstResult((int) pageable.getOffset());
         query.setMaxResults(pageable.getPageSize());

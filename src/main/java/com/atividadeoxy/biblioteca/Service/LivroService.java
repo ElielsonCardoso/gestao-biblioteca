@@ -34,6 +34,10 @@ public class LivroService {
         return repository.findLivroByParam(pageable, livroParam);
     }
 
+    public Page<LivroDTO> findLivrosRecomendados(Pageable pageable, Long usuarioId){
+        return repository.findLivrosRecomendados(pageable, usuarioId);
+    }
+
     public Livro updateLivro(Livro livroAtualizado) throws Exception {
         Optional<Livro> livroAtual =  repository.findById(livroAtualizado.getId());
         if (livroAtual.isPresent()) {

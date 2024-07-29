@@ -44,6 +44,28 @@ public class LivroRepositoryImpl implements LivroRepositoryCustom {
         return new PageImpl<>(livros, pageable, count);
     }
 
+    @Override
+    public Page<LivroDTO> findLivrosRecomendados(Pageable pageable, Long usuarioId) {
+        StringBuilder sql = new StringBuilder(getSqlFindLivrosRecomendados());
+
+        Query query = entityManager.createNativeQuery(sql.toString());
+
+        query.setParameter("usuarioId", usuarioId);
+
+        query.setFirstResult((int) pageable.getOffset());
+        query.setMaxResults(pageable.getPageSize());
+
+        List<Object[]> results = query.getResultList();
+        int count = results.size();
+        List<LivroDTO> livros = new ArrayList<>();
+
+        for (Object[] result : results) {
+            livros.add(LivroDTO.resultToLivroDTO(result));
+        }
+
+        return new PageImpl<>(livros, pageable, count);
+    }
+
     private void setParametros(Query query, LivroParam livroParam) {
         if (livroParam.getTitulo() != null) {
             query.setParameter("titulo", "%" + livroParam.getTitulo().toUpperCase() + "%");
@@ -82,6 +104,39 @@ public class LivroRepositoryImpl implements LivroRepositoryCustom {
                "  FROM LIVRO L " +
                "  JOIN CATEGORIA C ON C.ID = L.CATEGORIA_ID "+
                " WHERE 1=1 ";
+    }
+
+    private String getSqlFindLivrosRecomendados() {
+        return "SELECT L.ID, " +
+                "      L.TITULO, " +
+                "      L.AUTOR, " +
+                "      L.ISBN, " +
+                "      L.DATA_PUBLICACAO AS DATAPUBLICACAO, " +
+                "      C.DESCRICAO AS DESCRICAOCATEGORIA, " +
+                "      CASE WHEN EXISTS (SELECT E.ID " +
+                "                          FROM EMPRESTIMO E " +
+                "                         WHERE E.LIVRO_ID = L.ID " +
+                "                           AND E.DATA_DEVOLUCAO IS NULL) " +
+                "           THEN 'SIM' ELSE 'NAO' " +
+                "       END AS EMPRESTADO " +
+                "  FROM LIVRO L " +
+                "  JOIN CATEGORIA C ON C.ID = L.CATEGORIA_ID " +
+                " WHERE L.ID NOT IN (SELECT E.LIVRO_ID " +
+                "                      FROM EMPRESTIMO E " +
+                "                     WHERE E.USUARIO_ID = :usuarioId) " +
+                "   AND L.CATEGORIA_ID IN ( " +
+                "       SELECT Y.CATEGORIA_ID " +
+                "         FROM (SELECT X.CATEGORIA_ID, " +
+                "                      MAX(X.QTDEEMPRESTADA) AS QTDEEMPRESTADA " +
+                "                 FROM (SELECT DISTINCT L.CATEGORIA_ID, " +
+                "                              COUNT(L.CATEGORIA_ID) QTDEEMPRESTADA " +
+                "                         FROM EMPRESTIMO E " +
+                "                         JOIN LIVRO L ON L.ID = E.LIVRO_ID " +
+                "                        WHERE E.USUARIO_ID = :usuarioId " +
+                "                        GROUP BY L.CATEGORIA_ID " +
+                "                      ) X " +
+                "                GROUP BY X.CATEGORIA_ID " +
+                "              ) Y ) ";
     }
 
     private String getWhere(LivroParam livroParam) {

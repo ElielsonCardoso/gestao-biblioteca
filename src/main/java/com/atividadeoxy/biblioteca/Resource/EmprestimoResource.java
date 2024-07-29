@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.atividadeoxy.biblioteca.Class.DTO.EmprestimoDTO;
 import com.atividadeoxy.biblioteca.Class.DTO.RecomendacaoLivroDTO;
 import com.atividadeoxy.biblioteca.Class.Emprestimo;
-import com.atividadeoxy.biblioteca.Class.Livro;
 import com.atividadeoxy.biblioteca.Resource.Param.EmprestimoParam;
 import com.atividadeoxy.biblioteca.Service.EmprestimoService;
 
@@ -49,11 +48,11 @@ public class EmprestimoResource {
     }
 
     @GetMapping("/recomendacao/{usuarioid}")
-    public Page<RecomendacaoLivroDTO> findRecomendacaoLivros(@PathVariable Long usuarioid,
+    public Page<RecomendacaoLivroDTO> findRecomendacaoLivros(@PathVariable Long usuarioId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size){
             Pageable pageable = PageRequest.of(page, size);
-        return service.findRecomendacaoLivros(pageable, usuarioid);
+        return service.findRecomendacaoLivros(pageable, usuarioId);
     }
 
     @GetMapping("/findByParam")

@@ -12,7 +12,6 @@ import com.atividadeoxy.biblioteca.Class.DTO.EmprestimoDTO;
 import com.atividadeoxy.biblioteca.Class.DTO.RecomendacaoLivroDTO;
 import com.atividadeoxy.biblioteca.Class.Emprestimo;
 import com.atividadeoxy.biblioteca.Class.Enum.StatusEmprestimo;
-import com.atividadeoxy.biblioteca.Class.Livro;
 import com.atividadeoxy.biblioteca.Repository.EmprestimoRepository;
 import com.atividadeoxy.biblioteca.Resource.Param.EmprestimoParam;
 
@@ -37,7 +36,7 @@ public class EmprestimoService {
     public Emprestimo devolverEmprestimo(Long id) throws Exception {
         Optional<Emprestimo> emprestimoAtual =  repository.findById(id);
         if (emprestimoAtual.isPresent()) {
-            emprestimoAtual.get().setData_devolucao(LocalDate.now());
+            emprestimoAtual.get().setDataDevolucao(LocalDate.now());
             emprestimoAtual.get().setStatus(StatusEmprestimo.DEVOLVIDO);
             return repository.save(emprestimoAtual.get());
         }else{
@@ -49,8 +48,8 @@ public class EmprestimoService {
         repository.deleteById(id);
     }
 
-    public Page<RecomendacaoLivroDTO> findRecomendacaoLivros(Pageable pageable, Long usuarioid){
-        return repository.findRecomendacaoLivros(pageable, usuarioid);
+    public Page<RecomendacaoLivroDTO> findRecomendacaoLivros(Pageable pageable, Long usuarioId){
+        return repository.findRecomendacaoLivros(pageable, usuarioId);
     }
 
     public Page<EmprestimoDTO> findEmprestimoByParam(Pageable pageable, EmprestimoParam emprestimoParam){

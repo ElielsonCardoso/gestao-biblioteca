@@ -8,7 +8,7 @@ import com.atividadeoxy.biblioteca.Class.DTO.RecomendacaoLivroDTO;
 import com.atividadeoxy.biblioteca.Resource.Param.EmprestimoParam;
 
 public interface EmprestimoRepositoryCustom {
-    Page<RecomendacaoLivroDTO> findRecomendacaoLivros(Pageable pageable, Long usuarioid);
+    Page<RecomendacaoLivroDTO> findRecomendacaoLivros(Pageable pageable, Long usuarioId);
 
     Page<EmprestimoDTO> findEmprestimoByParam(Pageable pageable, EmprestimoParam emprestimoParam);
 }

@@ -54,6 +54,14 @@ public class LivroResource {
         return ResponseEntity.ok(service.findLivroByParam(pageable, param));
     }
 
+    @GetMapping("/recomendacao/{usuarioid}")
+    public ResponseEntity<Page<LivroDTO>> findLivrosRecomendados(@PathVariable Long usuarioid,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(service.findLivrosRecomendados(pageable, usuarioid));
+    }
+
     @PutMapping
     public ResponseEntity<Livro> updateLivro(@RequestBody Livro livroAtualizado) throws Exception {
         return ResponseEntity.ok(service.updateLivro(livroAtualizado));
