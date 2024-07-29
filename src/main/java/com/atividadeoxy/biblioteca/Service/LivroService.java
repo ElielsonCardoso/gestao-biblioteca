@@ -7,8 +7,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.atividadeoxy.biblioteca.Class.DTO.LivroDTO;
 import com.atividadeoxy.biblioteca.Class.Livro;
 import com.atividadeoxy.biblioteca.Repository.LivroRepository;
+import com.atividadeoxy.biblioteca.Resource.Param.LivroParam;
 
 @Service
 public class LivroService {
@@ -26,6 +28,10 @@ public class LivroService {
 
     public Optional<Livro> findById(Long id){
         return repository.findById(id);
+    }
+
+    public Page<LivroDTO> findLivroByParam(Pageable pageable, LivroParam livroParam){
+        return repository.findLivroByParam(pageable, livroParam);
     }
 
     public Livro updateLivro(Livro livroAtualizado) throws Exception {

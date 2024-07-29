@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.atividadeoxy.biblioteca.Class.DTO.EmprestimoDTO;
+import com.atividadeoxy.biblioteca.Class.DTO.RecomendacaoLivroDTO;
 import com.atividadeoxy.biblioteca.Class.Emprestimo;
+import com.atividadeoxy.biblioteca.Class.Livro;
+import com.atividadeoxy.biblioteca.Resource.Param.EmprestimoParam;
 import com.atividadeoxy.biblioteca.Service.EmprestimoService;
 
 @RestController
@@ -38,10 +42,26 @@ public class EmprestimoResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Emprestimo> getEmprestimoById(@PathVariable Long id) {
+    public ResponseEntity<Emprestimo> findById(@PathVariable Long id) {
         return service.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/recomendacao/{usuarioid}")
+    public Page<RecomendacaoLivroDTO> findRecomendacaoLivros(@PathVariable Long usuarioid,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size){
+            Pageable pageable = PageRequest.of(page, size);
+        return service.findRecomendacaoLivros(pageable, usuarioid);
+    }
+
+    @GetMapping("/findByParam")
+    public ResponseEntity<Page<EmprestimoDTO>> findEmprestimoByParam(EmprestimoParam param,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(service.findEmprestimoByParam(pageable, param));
     }
 
     @PutMapping("/devolver/{id}")

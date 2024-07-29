@@ -1,5 +1,6 @@
 package com.atividadeoxy.biblioteca.Class;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 import javax.persistence.*;
@@ -15,7 +16,7 @@ public class Usuario {
     private Long id;
     private String nome;
     private String email;
-    private LocalDate dataCadastro;
+    private Timestamp dataCadastro;
     private String telefone;
 
 }

@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.atividadeoxy.biblioteca.Class.DTO.LivroDTO;
 import com.atividadeoxy.biblioteca.Class.Livro;
+import com.atividadeoxy.biblioteca.Resource.Param.LivroParam;
 import com.atividadeoxy.biblioteca.Service.LivroService;
 
 @RestController
@@ -42,6 +44,14 @@ public class LivroResource {
         return service.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/findByParam")
+    public ResponseEntity<Page<LivroDTO>> findLivroByParam(LivroParam param,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(service.findLivroByParam(pageable, param));
     }
 
     @PutMapping

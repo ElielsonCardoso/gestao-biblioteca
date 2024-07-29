@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.atividadeoxy.biblioteca.Class.DTO.UsuarioDTO;
 import com.atividadeoxy.biblioteca.Class.Usuario;
+import com.atividadeoxy.biblioteca.Resource.Param.UsuarioParam;
 import com.atividadeoxy.biblioteca.Service.UsuarioService;
 
 @RestController
@@ -42,6 +44,14 @@ public class UsuarioResource {
         return service.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/findByParam")
+    public ResponseEntity<Page<UsuarioDTO>> findUsuarioByParam(UsuarioParam param,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(service.findUsuarioByParam(pageable, param));
     }
 
     @PutMapping

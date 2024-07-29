@@ -7,8 +7,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.atividadeoxy.biblioteca.Class.DTO.UsuarioDTO;
 import com.atividadeoxy.biblioteca.Class.Usuario;
 import com.atividadeoxy.biblioteca.Repository.UsuarioRepository;
+import com.atividadeoxy.biblioteca.Resource.Param.UsuarioParam;
 
 @Service
 public class UsuarioService {
@@ -26,6 +28,10 @@ public class UsuarioService {
 
     public Optional<Usuario> findById(Long id){
         return repository.findById(id);
+    }
+
+    public Page<UsuarioDTO> findUsuarioByParam(Pageable pageable, UsuarioParam usuarioParam){
+        return repository.findUsuarioByParam(pageable, usuarioParam);
     }
 
     public Usuario updateUsuario(Usuario usuarioAtualizado) throws Exception {
