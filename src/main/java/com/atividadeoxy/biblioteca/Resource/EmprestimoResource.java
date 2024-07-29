@@ -47,12 +47,12 @@ public class EmprestimoResource {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/recomendacao/{usuarioid}")
-    public Page<RecomendacaoLivroDTO> findRecomendacaoLivros(@PathVariable Long usuarioId,
+    @GetMapping("/recomendacao/{usuarioId}")
+    public ResponseEntity<Page<RecomendacaoLivroDTO>> findRecomendacaoLivros(@PathVariable Long usuarioId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size){
             Pageable pageable = PageRequest.of(page, size);
-        return service.findRecomendacaoLivros(pageable, usuarioId);
+        return ResponseEntity.ok(service.findRecomendacaoLivros(pageable, usuarioId));
     }
 
     @GetMapping("/findByParam")

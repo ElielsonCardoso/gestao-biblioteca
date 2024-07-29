@@ -14,7 +14,7 @@ public class EmprestimoDTO {
     private Long id;
     private Long usuarioId;
     private String nomeUsuario;
-    private Long livroid;
+    private Long livroId;
     private String titulo;
     private LocalDate dataEmprestimo;
     private LocalDate dataDevolucao;
@@ -25,7 +25,7 @@ public class EmprestimoDTO {
         emprestimoDTO.setId(((Number) result[0]).longValue());
         emprestimoDTO.setUsuarioId(((Number) result[1]).longValue());
         emprestimoDTO.setNomeUsuario((String) result[2]);
-        emprestimoDTO.setLivroid(((Number) result[3]).longValue());
+        emprestimoDTO.setLivroId(((Number) result[3]).longValue());
         emprestimoDTO.setTitulo((String) result[4]);
         Date dataEmprestimo = (Date) result[5];
         emprestimoDTO.setDataEmprestimo(dataEmprestimo.toLocalDate());

@@ -6,12 +6,16 @@ import com.atividadeoxy.biblioteca.Class.Enum.StatusEmprestimo;
 
 import javax.persistence.*;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Emprestimo {
     @Id
     private Long id;
