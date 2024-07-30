@@ -1,5 +1,7 @@
 package com.atividadeoxy.biblioteca.Resource;
 
+import java.sql.Timestamp;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +31,10 @@ public class UsuarioResource {
 
     @PostMapping
     public Usuario createUsuario(@RequestBody Usuario novoUsuario) {
+        if (novoUsuario.getId() == null) {
+            novoUsuario.setId(service.getProximoId());
+        }
+        novoUsuario.setDataCadastro(new Timestamp(System.currentTimeMillis()));
         return service.createUsuario(novoUsuario);
     }
 

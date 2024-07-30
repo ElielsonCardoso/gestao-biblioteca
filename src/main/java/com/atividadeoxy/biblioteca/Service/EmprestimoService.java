@@ -55,4 +55,8 @@ public class EmprestimoService {
     public Page<EmprestimoDTO> findEmprestimoByParam(Pageable pageable, EmprestimoParam emprestimoParam){
         return repository.findEmprestimoByParam(pageable, emprestimoParam);
     }
+
+    public Long getProximoId(){
+        return repository.getProximoId();
+    }
 }

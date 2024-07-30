@@ -20,6 +20,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepositoryCustom {
 
     @PersistenceContext
     private EntityManager entityManager;
+    private int anInt;
 
     @Override
     public Page<UsuarioDTO> findUsuarioByParam(Pageable pageable, UsuarioParam usuarioParam) {
@@ -42,6 +43,14 @@ public class UsuarioRepositoryImpl implements UsuarioRepositoryCustom {
         }
 
         return new PageImpl<>(usuarios, pageable, count);
+    }
+
+    @Override
+    public Long getProximoId() {
+        String sql = getSqlProximoId();
+        Query query = entityManager.createNativeQuery(sql);
+        Object result = query.getSingleResult();
+        return ((Number) result).longValue();
     }
 
     private void setParametros(Query query, UsuarioParam usuarioParam) {
@@ -97,5 +106,10 @@ public class UsuarioRepositoryImpl implements UsuarioRepositoryCustom {
         }
 
         return sqlWhere.toString();
+    }
+
+    private String getSqlProximoId() {
+        return "SELECT COALESCE(MAX(U.ID), 0)+1 ID " +
+                "  FROM USUARIO U ";
     }
 }

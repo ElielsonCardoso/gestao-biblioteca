@@ -11,4 +11,6 @@ public interface EmprestimoRepositoryCustom {
     Page<RecomendacaoLivroDTO> findRecomendacaoLivros(Pageable pageable, Long usuarioId);
 
     Page<EmprestimoDTO> findEmprestimoByParam(Pageable pageable, EmprestimoParam emprestimoParam);
+
+    Long getProximoId();
 }

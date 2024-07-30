@@ -66,6 +66,14 @@ public class LivroRepositoryImpl implements LivroRepositoryCustom {
         return new PageImpl<>(livros, pageable, count);
     }
 
+    @Override
+    public Long getProximoId() {
+        String sql = getSqlProximoId();
+        Query query = entityManager.createNativeQuery(sql);
+        Object result = query.getSingleResult();
+        return ((Number) result).longValue();
+    }
+
     private void setParametros(Query query, LivroParam livroParam) {
         if (livroParam.getTitulo() != null) {
             query.setParameter("titulo", "%" + livroParam.getTitulo().toUpperCase() + "%");
@@ -136,7 +144,11 @@ public class LivroRepositoryImpl implements LivroRepositoryCustom {
                 "                        GROUP BY L.CATEGORIA_ID " +
                 "                      ) X " +
                 "                GROUP BY X.CATEGORIA_ID " +
-                "              ) Y ) ";
+                "              ) Y ) " +
+                "   AND NOT EXISTS (SELECT E.ID " +
+                "                     FROM EMPRESTIMO E " +
+                "                    WHERE E.LIVRO_ID = L.ID " +
+                "                      AND E.DATA_DEVOLUCAO IS NULL) ";
     }
 
     private String getWhere(LivroParam livroParam) {
@@ -177,5 +189,10 @@ public class LivroRepositoryImpl implements LivroRepositoryCustom {
         }
 
         return sqlWhere.toString();
+    }
+
+    private String getSqlProximoId() {
+        return "SELECT COALESCE(MAX(L.ID), 0)+1 ID " +
+               "  FROM LIVRO L ";
     }
 }

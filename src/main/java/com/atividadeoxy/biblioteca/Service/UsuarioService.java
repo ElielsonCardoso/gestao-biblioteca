@@ -40,7 +40,6 @@ public class UsuarioService {
             usuarioAtual.get().setNome(usuarioAtualizado.getNome());
             usuarioAtual.get().setEmail(usuarioAtualizado.getEmail());
             usuarioAtual.get().setTelefone(usuarioAtualizado.getTelefone());
-            usuarioAtual.get().setDataCadastro(usuarioAtualizado.getDataCadastro());
             return repository.save(usuarioAtual.get());
         }else{
             throw new Exception("Usuário não encontrado!");
@@ -49,5 +48,9 @@ public class UsuarioService {
 
     public void deleteUsuario(Long id){
         repository.deleteById(id);
+    }
+
+    public Long getProximoId(){
+        return repository.getProximoId();
     }
 }

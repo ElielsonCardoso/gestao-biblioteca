@@ -29,6 +29,9 @@ public class LivroResource {
 
     @PostMapping
     public Livro createLivro(@RequestBody Livro novoLivro) {
+        if (novoLivro.getId() == null) {
+            novoLivro.setId(service.getProximoId());
+        }
         return service.createLivro(novoLivro);
     }
 

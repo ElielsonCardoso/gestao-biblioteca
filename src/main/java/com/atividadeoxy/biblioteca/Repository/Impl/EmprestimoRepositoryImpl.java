@@ -67,6 +67,14 @@ public class EmprestimoRepositoryImpl implements EmprestimoRepositoryCustom {
         return new PageImpl<>(emprestimos, pageable, count);
     }
 
+    @Override
+    public Long getProximoId() {
+        String sql = getSqlProximoId();
+        Query query = entityManager.createNativeQuery(sql);
+        Object result = query.getSingleResult();
+        return ((Number) result).longValue();
+    }
+
     private void setParametros(Query query, EmprestimoParam emprestimoParam) {
         if (emprestimoParam.getUsuarioId() != null) {
             query.setParameter("usuarioId", emprestimoParam.getUsuarioId());
@@ -98,19 +106,21 @@ public class EmprestimoRepositoryImpl implements EmprestimoRepositoryCustom {
     }
 
     private String getSqlRecomendacaoLivro() {
-        return "SELECT X.CATEGORIA_ID AS CATEGORIAID, "+
-               "       MAX(X.QTDEEMPRESTADA) AS QTDEEMPRESTADA, "+
-               "       C.DESCRICAO AS DESCRICAOCATEGORIA "+
-               "  FROM ( "+
-               "        SELECT DISTINCT L.CATEGORIA_ID, "+
-               "               COUNT(L.CATEGORIA_ID) QTDEEMPRESTADA "+
-               "          FROM EMPRESTIMO E "+
-               "          JOIN LIVRO L ON L.ID = E.LIVRO_ID "+
-               "         WHERE E.USUARIO_ID = :usuarioId "+
-               "         GROUP BY L.CATEGORIA_ID "+
-               ") X "+
-               "JOIN CATEGORIA C ON C.ID = X.CATEGORIA_ID "+
-               "GROUP BY X.CATEGORIA_ID, C.DESCRICAO ";
+        return "SELECT X.CATEGORIA_ID AS CATEGORIAID, " +
+               "       X.QTDEEMPRESTADA AS QTDEEMPRESTADA, " +
+               "       C.DESCRICAO AS DESCRICAOCATEGORIA " +
+               "  FROM ( " +
+               "    SELECT L.CATEGORIA_ID, " +
+               "           COUNT(L.CATEGORIA_ID) AS QTDEEMPRESTADA " +
+               "      FROM EMPRESTIMO E " +
+               "      JOIN LIVRO L ON L.ID = E.LIVRO_ID " +
+               "     WHERE E.USUARIO_ID = :usuarioId " +
+               "     GROUP BY L.CATEGORIA_ID " +
+               "     ORDER BY QTDEEMPRESTADA DESC" +
+               "     LIMIT 1" +
+               ") X " +
+               "JOIN CATEGORIA C ON C.ID = X.CATEGORIA_ID ";
+
     }
 
     private String getSqlFindEmprestimo() {
@@ -160,5 +170,10 @@ public class EmprestimoRepositoryImpl implements EmprestimoRepositoryCustom {
         }
 
         return sqlWhere.toString();
+    }
+
+    private String getSqlProximoId() {
+        return "SELECT COALESCE(MAX(E.ID), 0)+1 ID " +
+                "  FROM EMPRESTIMO E ";
     }
 }

@@ -43,9 +43,7 @@ public class LivroService {
         if (livroAtual.isPresent()) {
             livroAtual.get().setAutor(livroAtualizado.getAutor());
             livroAtual.get().setIsbn(livroAtualizado.getIsbn());
-            livroAtual.get().setCategoria(livroAtualizado.getCategoria());
             livroAtual.get().setTitulo(livroAtualizado.getTitulo());
-            livroAtual.get().setDataPublicacao(livroAtualizado.getDataPublicacao());
             return repository.save(livroAtual.get());
         }else{
             throw new Exception("Livro não encontrado!");
@@ -54,5 +52,9 @@ public class LivroService {
 
     public void deleteLivro(Long id){
         repository.deleteById(id);
+    }
+
+    public Long getProximoId(){
+        return repository.getProximoId();
     }
 }

@@ -8,4 +8,6 @@ import com.atividadeoxy.biblioteca.Resource.Param.UsuarioParam;
 
 public interface UsuarioRepositoryCustom {
     Page<UsuarioDTO> findUsuarioByParam(Pageable pageable, UsuarioParam usuarioParam);
+
+    Long getProximoId();
 }

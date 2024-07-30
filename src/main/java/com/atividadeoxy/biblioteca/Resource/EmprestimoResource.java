@@ -1,5 +1,7 @@
 package com.atividadeoxy.biblioteca.Resource;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.atividadeoxy.biblioteca.Class.DTO.EmprestimoDTO;
 import com.atividadeoxy.biblioteca.Class.DTO.RecomendacaoLivroDTO;
 import com.atividadeoxy.biblioteca.Class.Emprestimo;
+import com.atividadeoxy.biblioteca.Class.Enum.StatusEmprestimo;
 import com.atividadeoxy.biblioteca.Resource.Param.EmprestimoParam;
 import com.atividadeoxy.biblioteca.Service.EmprestimoService;
 
@@ -30,6 +33,11 @@ public class EmprestimoResource {
 
     @PostMapping
     public Emprestimo createEmprestimo(@RequestBody Emprestimo novoEmprestimo) {
+        if (novoEmprestimo.getId() == null) {
+            novoEmprestimo.setId(service.getProximoId());
+        }
+        novoEmprestimo.setDataEmprestimo(LocalDate.now());
+        novoEmprestimo.setStatus(StatusEmprestimo.EMPRESTADO);
         return service.createEmprestimo(novoEmprestimo);
     }
 
