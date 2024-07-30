@@ -1,0 +1,16 @@
+.success-message {
+  display: flex;
+  align-items: center;
+  background-color: #d4edda;
+  color: #155724;
+  padding: 16px;
+  border-radius: 4px;
+  margin: 16px auto;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.success-message mat-icon {
+  margin-right: 8px;
+}

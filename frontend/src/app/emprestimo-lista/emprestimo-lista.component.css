@@ -1,0 +1,113 @@
+:host {
+  background: linear-gradient(to right, #80ace6, #3f51b5);
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.consulta-titulo {
+  color: #3f51b5;
+  font-size: 1.5em;
+  margin-bottom: 16px;
+}
+
+.table-container {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+.content {
+  padding: 16px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.devolver-button {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 12px;
+  border-radius: 4px;
+  padding: 6px 12px;
+}
+
+.devolver-button:hover {
+  background-color: #2fa034;
+}
+
+mat-icon {
+  font-size: 26px;
+}
+
+mat-icon.check_circle {
+  color: green;
+}
+
+body {
+  background-color: #80ace6;
+}
+
+.main-container {
+  background-color: #80ace6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-toolbar.toolbar {
+  background-color: #3f51b5;
+  color: white;
+}
+
+.app-title {
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.welcome-message {
+  font-size: 18px;
+  margin-left: 16px;
+}
+
+.content {
+  padding: 16px;
+  background-color: #f5f5f5;
+}
+
+.mat-elevation-z8 {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+table {
+  width: 100%;
+}
+
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.mat-form-field {
+  width: 200px;
+}
+
+.add-book-button {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+}
+
+.add-book-button button {
+  background-color: #0e6b3f;
+  color: white;
+}

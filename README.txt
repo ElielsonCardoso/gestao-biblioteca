@@ -6,14 +6,18 @@ Desenvolvimento de uma aplicação para gestão de biblioteca, criada conforme p
 ## Arquitetura
 Banco de dados: relacional, contendo a estrutura solicitada na atividade. Ferramenta utilizada: DBeaver. O banco está em nuvem por meio do https://railway.app.
 Back-end: Desenvolvido em Java (11), realiza a persistência de dados e fornecimento de API's Rest. Ferramente utilizada: Intellij.
+Front-end: Desenvolvido em Angular, responsável pela interface do usuário. Ferramenta utilizada: VS Code.
 
 ## Ambiente
 Java 11: Foi utilizada a JDK 11.
+Node.js e npm: Necessários para o Angular.
+Angular CLI: Para facilitar o desenvolvimento Angular.
 Banco de Dados Relacional: PostgreSQL. 
 Maven: Para gerenciamento de dependências do projeto Java.
 Git: Para clonar o repositório (https://github.com/ElielsonCardoso/gestao-biblioteca).
 
 beckend: ...\gestao-biblioteca\src
+frontend: ...\gestao-biblioteca\frontend
 
 ## Endpoints da API
 CATEGORIA
@@ -48,7 +52,7 @@ Método: GET
 Endpoint: /api/emprestimos/recomendacao/{usuarioId}
 Param:
 	page (opcional): Número da página (padrão: 0).
-	size (opcional): Tamanho da página (padrão: 10).
+	size (opcional): Tamanho da página (padrão: 20).
 
 Buscar Empréstimos por Parâmetros
 Método: GET
@@ -64,7 +68,7 @@ Param:
 		String status;
 	}
 	page (opcional): Número da página (padrão: 0).
-	size (opcional): Tamanho da página (padrão: 10).
+	size (opcional): Tamanho da página (padrão: 20).
 	
 Devolver Empréstimo
 Método: PUT
@@ -107,14 +111,14 @@ Param:
 		Boolean emprestado;
 	}
 	page (opcional): Número da página (padrão: 0).
-	size (opcional): Tamanho da página (padrão: 10).
+	size (opcional): Tamanho da página (padrão: 20).
 	
 Busca de Livros recomendados por Usuário (com base na categoria mais emprestada)
 Método: GET
 Endpoint: /api/livros/recomendacao/{usuarioid}	
 Param:
 	page (opcional): Número da página (padrão: 0).
-	size (opcional): Tamanho da página (padrão: 10).
+	size (opcional): Tamanho da página (padrão: 20).
 	
 Atualizar Livro
 Método: PUT
@@ -155,7 +159,7 @@ Param:
 		String telefone;
 	}
 	page (opcional): Número da página (padrão: 0).
-	size (opcional): Tamanho da página (padrão: 10).
+	size (opcional): Tamanho da página (padrão: 20).
 	
 Atualizar Usuário
 Método: PUT

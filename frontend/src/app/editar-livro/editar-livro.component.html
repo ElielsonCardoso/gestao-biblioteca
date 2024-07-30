@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Editar Livro</h2>
+<mat-dialog-content>
+  <div *ngIf="!camposPreenchidos()" class="error-message">
+    Preencha todos os campos!
+  </div>
+
+  <form>
+    <mat-form-field appearance="fill">
+      <mat-label>Autor</mat-label>
+      <input matInput [(ngModel)]="data.livro.autor" name="autor" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>ISBN</mat-label>
+      <input matInput [(ngModel)]="data.livro.isbn" name="isbn" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Título</mat-label>
+      <input matInput [(ngModel)]="data.livro.titulo" name="titulo" required>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-button (click)="onSave()" color="primary">Salvar</button>
+</mat-dialog-actions>

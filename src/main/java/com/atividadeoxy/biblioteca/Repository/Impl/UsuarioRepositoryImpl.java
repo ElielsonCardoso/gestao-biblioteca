@@ -20,7 +20,6 @@ public class UsuarioRepositoryImpl implements UsuarioRepositoryCustom {
 
     @PersistenceContext
     private EntityManager entityManager;
-    private int anInt;
 
     @Override
     public Page<UsuarioDTO> findUsuarioByParam(Pageable pageable, UsuarioParam usuarioParam) {

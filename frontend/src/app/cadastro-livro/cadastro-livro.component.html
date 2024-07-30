@@ -1,0 +1,47 @@
+<mat-card class="form-container">
+  <mat-card-header class="header-container">
+    <mat-card-title>Cadastro de Livro</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <app-success-message [message]="successMessage"></app-success-message>
+    <form (ngSubmit)="adicionarLivro()">
+      <mat-form-field appearance="fill">
+        <mat-label>Título</mat-label>
+        <input matInput [(ngModel)]="livro.titulo" name="titulo" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Autor</mat-label>
+        <input matInput [(ngModel)]="livro.autor" name="autor" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>ISBN</mat-label>
+        <input matInput [(ngModel)]="livro.isbn" name="isbn" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Data de Publicação</mat-label>
+        <input matInput [(ngModel)]="livro.dataPublicacao" name="dataPublicacao" required placeholder="dd/MM/yyyy">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Categoria</mat-label>
+        <mat-select [(ngModel)]="livro.categoria" name="categoria" required>
+          <mat-option *ngFor="let categoria of categorias" [value]="categoria">
+            {{ categoria.descricao }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div *ngIf="!camposPreenchidos()" class="error-message">
+        Preencha todos os campos!
+      </div>
+
+      <div class="form-actions">
+        <button mat-raised-button type="submit">Adicionar Livro</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

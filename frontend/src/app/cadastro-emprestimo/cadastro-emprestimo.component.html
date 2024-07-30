@@ -1,0 +1,47 @@
+<mat-card class="form-container">
+  <mat-card-header class="header-container">
+    <mat-card-title>Cadastro de Empréstimo</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <app-success-message [message]="successMessage"></app-success-message>
+    <form (ngSubmit)="adicionarEmprestimo()">
+
+      <mat-form-field appearance="fill">
+        <mat-label>Pesquisar Usuário</mat-label>
+        <input matInput [(ngModel)]="usuarioFiltro" (ngModelChange)="filtrarUsuarios()" name="usuarioFiltro" placeholder="Digite o nome do usuário" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Usuário</mat-label>
+        <mat-select [(ngModel)]="emprestimo.usuario" name="usuario" required>
+          <mat-option *ngFor="let usuario of usuariosFiltrados" [value]="usuario">
+            {{ usuario.nome }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Pesquisar Livro</mat-label>
+        <input matInput [(ngModel)]="livroFiltro" (ngModelChange)="filtrarLivros()" name="livroFiltro" placeholder="Digite o título do livro" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Livros disponíveis</mat-label>
+        <mat-select [(ngModel)]="emprestimo.livro" name="livro" required>
+          <mat-option *ngFor="let livro of livrosFiltrados" [value]="livro">
+            {{ livro.titulo }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div *ngIf="!camposPreenchidos()" class="error-message">
+        Selecione um livro e um usuário para realizar o empréstimo.
+      </div>
+
+      <div class="form-actions">
+        <button mat-raised-button color="primary" type="submit">Realizar Empréstimo</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

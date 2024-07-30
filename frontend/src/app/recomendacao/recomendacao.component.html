@@ -1,0 +1,109 @@
+<mat-card class="form-container">
+  <mat-card-header class="header-container">
+    <mat-card-title>Recomendação de Livro por Usuário</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form (ngSubmit)="pesquisarRecomendacoes()">
+
+      <mat-form-field appearance="fill">
+        <mat-label>Pesquisar Usuário</mat-label>
+        <input matInput [(ngModel)]="usuarioFiltro" (ngModelChange)="filtrarUsuarios()" name="usuarioFiltro" placeholder="Digite o nome do usuário" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Usuário</mat-label>
+        <mat-select [(ngModel)]="usuarioSelecionadoId" name="usuario" required (selectionChange)="pesquisarRecomendacoes()">
+          <mat-option *ngFor="let usuario of usuariosFiltrados" [value]="usuario.id">
+            {{ usuario.nome }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div *ngIf="!camposPreenchidos()" class="error-message">
+        Selecione um usuário para buscar recomendações.
+      </div>
+
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<div *ngIf="recomendacao.length > 0" class="center-content">
+  <div class="content">
+    <h6 class="consulta-titulo">Categoria mais emprestada</h6>
+    <mat-list>
+      <mat-list-item *ngFor="let rec of recomendacao">
+        {{ rec.descricaoCategoria }} - Quantidade Emprestada: {{ rec.qtdeEmprestada }}
+      </mat-list-item>
+    </mat-list>
+  </div>
+</div>
+
+<div *ngIf="usuarioSelecionadoId != null && recomendacao.length == 0" class="center-content">
+  <div class="content">
+    <h6 class="consulta-titulo">Usuário não possui empréstimo, não foi possível gerar recomendação.</h6>
+  </div>
+</div>
+
+<div *ngIf="recomendacao.length > 0 && livros.length == 0" class="center-content">
+  <div class="content">
+    <h6 class="consulta-titulo">Nenhum livro não emprestado dessa categoria está disponível no momento.</h6>
+  </div>
+</div>
+
+<app-success-message [message]="successMessage"></app-success-message>
+
+<div *ngIf="livros.length > 0" class="center-content">
+
+  <div class="content">
+    <h6 class="consulta-titulo">Livros Recomendados Disponíveis</h6>
+
+    <div class="mat-elevation-z8">
+
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Código</th>
+          <td mat-cell *matCellDef="let livro">{{ livro.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="titulo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Título</th>
+          <td mat-cell *matCellDef="let livro">{{ livro.titulo }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="autor">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Autor</th>
+          <td mat-cell *matCellDef="let livro">{{ livro.autor }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="isbn">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ISBN</th>
+          <td mat-cell *matCellDef="let livro">{{ livro.isbn }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="dataPublicacao">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Data de Publicação</th>
+          <td mat-cell *matCellDef="let livro">{{livro.dataPublicacao | date:'dd/MM/yyyy'}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="descricaoCategoria">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Categoria</th>
+          <td mat-cell *matCellDef="let livro">{{ livro.descricaoCategoria }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="acoes">
+          <th mat-header-cell *matHeaderCellDef>Ações</th>
+          <td mat-cell *matCellDef="let livro">
+            <button class="emprestar-button" (click)="adicionarEmprestimo(livro.id)">
+              Emprestar
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+</div>

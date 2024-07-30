@@ -55,7 +55,7 @@ public class UsuarioResource {
     @GetMapping("/findByParam")
     public ResponseEntity<Page<UsuarioDTO>> findUsuarioByParam(UsuarioParam param,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size){
+            @RequestParam(defaultValue = "20") int size){
         Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(service.findUsuarioByParam(pageable, param));
     }

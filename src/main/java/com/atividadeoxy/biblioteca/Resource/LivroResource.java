@@ -52,7 +52,7 @@ public class LivroResource {
     @GetMapping("/findByParam")
     public ResponseEntity<Page<LivroDTO>> findLivroByParam(LivroParam param,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size){
+            @RequestParam(defaultValue = "20") int size){
         Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(service.findLivroByParam(pageable, param));
     }
@@ -60,7 +60,7 @@ public class LivroResource {
     @GetMapping("/recomendacao/{usuarioid}")
     public ResponseEntity<Page<LivroDTO>> findLivrosRecomendados(@PathVariable Long usuarioid,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size){
+            @RequestParam(defaultValue = "20") int size){
         Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(service.findLivrosRecomendados(pageable, usuarioid));
     }

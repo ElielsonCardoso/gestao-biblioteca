@@ -1,0 +1,33 @@
+<mat-card class="form-container">
+  <mat-card-header class="header-container">
+    <mat-card-title>Cadastro de Usuário</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <app-success-message [message]="successMessage"></app-success-message>
+    <form (ngSubmit)="adicionarUsuario()">
+      <mat-form-field appearance="fill">
+        <mat-label>Nome</mat-label>
+        <input matInput [(ngModel)]="usuario.nome" name="nome" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput [(ngModel)]="usuario.email" name="email" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Telefone</mat-label>
+        <input matInput [(ngModel)]="usuario.telefone" name="telefone" required placeholder="44999999999" maxlength="20">
+      </mat-form-field>
+
+      <div *ngIf="!camposPreenchidos()" class="error-message">
+        Preencha todos os campos!
+      </div>
+
+      <div class="form-actions">
+        <button mat-raised-button color="primary" type="submit">Adicionar Usuário</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
