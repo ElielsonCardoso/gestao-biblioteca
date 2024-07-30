@@ -53,9 +53,13 @@
 }
 
 .form-container {
-  max-width: 600px;
+  max-width: 1000px;
   margin: 20px auto;
   padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
 }
 
 .header-container {
@@ -79,4 +83,26 @@ mat-form-field {
 
 .form-actions button {
   margin: 0 8px;
+}
+
+.lista-titulo {
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.table-container {
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+table.mat-table {
+  width: 100%;
+  max-width: 100%;
 }

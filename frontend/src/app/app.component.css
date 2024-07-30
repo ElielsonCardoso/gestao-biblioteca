@@ -47,8 +47,3 @@ mat-toolbar.toolbar {
   margin-bottom: 20px;
 }
 
-button {
-  max-width: 200px;
-  margin: 20px auto;
-  display: block;
-}

@@ -38,11 +38,7 @@ export class CadastroLivroComponent {
 
   adicionarLivro() {
     if (this.camposPreenchidos()){
-      const [day, month, year] = this.livro.dataPublicacao.split('/');
-      const formattedDate = `${year}-${month}-${day}`;
-      const livroWithData = { ...this.livro, dataPublicacao: formattedDate };
-
-      this.livroService.addLivro(livroWithData).subscribe(response => {
+      this.livroService.addLivro(this.livro).subscribe(response => {
         this.successMessage = 'Livro adicionado com sucesso!';
         this.livro = {
           titulo: '',

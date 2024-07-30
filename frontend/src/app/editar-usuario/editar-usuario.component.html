@@ -17,7 +17,7 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Telefone</mat-label>
-      <input matInput [(ngModel)]="data.usuario.telefone" name="telefone" required>
+      <input type="number" matInput [(ngModel)]="data.usuario.telefone" name="telefone" placeholder="somente números" required>
     </mat-form-field>
   </form>
 </mat-dialog-content>
